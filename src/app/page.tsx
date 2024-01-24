@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Container, Button, Flex, Box, Section } from '@radix-ui/themes';
-import NavigationBar from '@/components/NavigationBar';
-import MainPage from '@/components/MainPage';
+import NavigationBarComponent from '@/components/navigation-bar';
+import MainPage from '@/components/main-page';
 
 export default function Home(): React.ReactNode {
   return (
@@ -10,7 +10,7 @@ export default function Home(): React.ReactNode {
       className="max-h-screen w-screen overflow-hidden"
     >
       <Flex className="flex flex-col-reverse md:flex-row h-screen w-screen border border-black-700">
-        <NavigationBar />
+        <NavigationBarComponent />
         <MainPage />
       </Flex>
     </Container>
