@@ -1,11 +1,16 @@
 import { Box } from '@radix-ui/themes';
+import { FaMessage } from 'react-icons/fa6';
+import { RiGroupFill, RiSettings3Fill } from 'react-icons/ri';
 import Image from 'next/image';
 
 export default function NavigationBar(): React.ReactNode {
   return (
-    <Box className="flex flex-row md:flex-col md:w-28 lg:w-36 p-4 bg-neutral-100 text-center justify-center items-center gap-5 w-screen">
-      <div className="font-bold text-xl">I</div>
-      <div className="font-bold text-xl">C</div>
+    <Box className="flex flex-row md:flex-col md:w-28 p-4 bg-neutral-100 text-center justify-center items-center gap-10 w-screen h-16 md:h-screen">
+      <div></div>
+
+      <div>
+        <RiGroupFill className="text-xl md:text-2xl text-zinc-400" />
+      </div>
 
       <div
         className="w-14 h-14 md:w-16 md:h-16 bg-purple-500 rounded-full cursor-pointer select-none
@@ -25,8 +30,13 @@ export default function NavigationBar(): React.ReactNode {
         </span>
       </div>
 
-      <div className="font-bold text-xl">O</div>
-      <div className="font-bold text-xl">N</div>
+      <div>
+        <FaMessage className="text-xl md:text-2xl text-zinc-400" />
+      </div>
+
+      {/* <div>
+        <RiSettings3Fill className="text-xl md:text-2xl text-zinc-400" />
+      </div> */}
     </Box>
   );
 }
