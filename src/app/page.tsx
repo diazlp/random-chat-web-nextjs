@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import { Container, Button, Flex, Box, Section } from '@radix-ui/themes';
+import { Container, Flex } from '@radix-ui/themes';
 import NavigationBarComponent from '@/components/navigation-bar';
 import MainPage from '@/components/main-page';
 
