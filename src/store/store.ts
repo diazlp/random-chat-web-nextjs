@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import socketSlice from './slices/socketSlice';
 import userSlice from './slices/userSlice';
 import {
   useDispatch as useDispatchBase,
@@ -10,6 +11,7 @@ import {
  */
 export const store = configureStore({
   reducer: {
+    socket: socketSlice,
     user: userSlice,
   },
 });
