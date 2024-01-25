@@ -1,7 +1,7 @@
 import { Box, Flex } from '@radix-ui/themes';
-import OnlineIndicatorComponent from './home-page/online-indicator';
-import LoginLogoComponent from './home-page/login-logo';
-import ChatBoxComponent from './home-page/chat-box';
+import OnlineIndicatorComponent from '@/components/home-page/online-indicator';
+import LoginLogoComponent from '@/components/home-page/login-logo';
+import ChatBoxComponent from '@/components/home-page/chat-box';
 
 export default function MainPage(): React.ReactNode {
   return (

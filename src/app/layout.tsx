@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import './globals.css';
 import './theme-config.css';
 import { Theme } from '@radix-ui/themes';
-import Head from 'next/head';
+import StoreProvider from './store-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,15 +22,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Theme
-          accentColor="purple"
-          grayColor="gray"
-          panelBackground="solid"
-          scaling="100%"
-          radius="full"
-        >
-          {children}
-        </Theme>
+        <StoreProvider>
+          <Theme
+            accentColor="purple"
+            grayColor="gray"
+            panelBackground="solid"
+            scaling="100%"
+            radius="full"
+          >
+            {children}
+          </Theme>
+        </StoreProvider>
       </body>
     </html>
   );
