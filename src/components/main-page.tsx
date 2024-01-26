@@ -5,9 +5,11 @@ import OnlineIndicatorComponent from '@/components/home-page/online-indicator';
 import LoginLogoComponent from '@/components/home-page/login-logo';
 import ChatBoxComponent from '@/components/home-page/chat-box';
 import useSocket from '@/hooks/useSocket';
+import usePeer from '@/hooks/usePeer';
 
 export default function MainPage(): React.ReactNode {
   useSocket();
+  const { peer, peerId } = usePeer();
 
   return (
     <Box className="flex-1 flex flex-col px-3 md:px-8 py-6">
