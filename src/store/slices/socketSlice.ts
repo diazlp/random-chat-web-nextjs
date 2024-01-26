@@ -1,11 +1,11 @@
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 
 interface SocketState {
-  id: null | string;
+  id: undefined | string;
 }
 
 const initialState: SocketState = {
-  id: null,
+  id: undefined,
 } as const;
 
 export const socketSlice = createSlice({

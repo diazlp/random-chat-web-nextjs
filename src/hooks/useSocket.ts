@@ -3,13 +3,13 @@ import { useDispatch } from '@/store/store';
 import { io, Socket } from 'socket.io-client';
 import { setSocketId } from '@/store/slices/socketSlice';
 
-const SOCKET_SERVER_URL = process.env.NEXT_PUBLIC_SOCKET_SERVER_URL || ''; // Access environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''; // Access environment variable
 
 const useSocket = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io(SOCKET_SERVER_URL, {
+    const socket = io(API_BASE_URL, {
       transports: ['websocket', 'polling'],
       forceNew: true,
       reconnectionAttempts: 10,
@@ -19,16 +19,18 @@ const useSocket = () => {
       },
     }) as Socket;
 
-    // Save the id of socket instance to Redux when connected
-    socket.on('connection', (socket): void => {
-      dispatch(setSocketId(socket.id));
+    socket.on('connected', (socket: string) => {
+      dispatch(setSocketId(socket));
     });
 
-    // Clean up the socket connection on component unmount
+    socket.on('disconnect', () => {
+      console.log('socket server disconnected.');
+    });
+
     return () => {
       socket.disconnect();
     };
-  }, [dispatch]);
+  }, []);
 
   return null;
 };
