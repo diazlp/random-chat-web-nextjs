@@ -6,6 +6,7 @@ import {
   setSocketInstance,
   setGuestCount,
 } from '@/store/slices/socketSlice';
+import { setPeerParticipants } from '@/store/slices/peerSlice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -13,6 +14,7 @@ const useSocket = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Initialize Socket.io connection
     const _socket = io(API_BASE_URL, {
       transports: ['websocket', 'polling'],
       forceNew: true,
@@ -35,6 +37,13 @@ const useSocket = () => {
     _socket.on('guestCount', (size: number) => {
       dispatch(setGuestCount(size));
     });
+
+    _socket.on(
+      'guestParticipants',
+      (participants: { clientId: string; peerId: string }[]) => {
+        dispatch(setPeerParticipants(participants));
+      }
+    );
 
     return () => {
       _socket.disconnect();

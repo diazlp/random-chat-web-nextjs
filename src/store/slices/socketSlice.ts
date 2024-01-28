@@ -4,13 +4,19 @@ import { Socket } from 'socket.io-client';
 interface SocketState {
   id: undefined | string;
   socket: any;
-  guestCount: number;
+  guest: {
+    count: number;
+    loading: boolean;
+  };
 }
 
 const initialState: SocketState = {
   id: undefined,
   socket: undefined,
-  guestCount: 0,
+  guest: {
+    count: 0,
+    loading: false,
+  },
 } as const;
 
 export const socketSlice = createSlice({
@@ -31,9 +37,9 @@ export const socketSlice = createSlice({
     },
     setGuestCount: (
       state: Draft<typeof initialState>,
-      action: PayloadAction<typeof initialState.guestCount>
+      action: PayloadAction<typeof initialState.guest.count>
     ) => {
-      state.guestCount = action.payload;
+      state.guest.count = action.payload;
     },
   },
 });

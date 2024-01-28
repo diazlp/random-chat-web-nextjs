@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import socketSlice from './slices/socketSlice';
+import peerSlice from './slices/peerSlice';
 import userSlice from './slices/userSlice';
 import {
   useDispatch as useDispatchBase,
@@ -14,13 +15,14 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore these action types
-        ignoredActions: ['socket/setSocketInstance'],
+        ignoredActions: ['socket/setSocketInstance', 'peer/setPeerInstance'],
         // Ignore these paths in the state
-        ignoredPaths: ['socket.socket'],
+        ignoredPaths: ['socket.socket', 'peer.peer'],
       },
     }),
   reducer: {
     socket: socketSlice,
+    peer: peerSlice,
     user: userSlice,
   },
 });
