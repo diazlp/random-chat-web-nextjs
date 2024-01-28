@@ -1,9 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch } from '@/store/store';
 import { io, Socket } from 'socket.io-client';
-import { setSocketId, setSocketInstance } from '@/store/slices/socketSlice';
+import {
+  setSocketId,
+  setSocketInstance,
+  setGuestCount,
+} from '@/store/slices/socketSlice';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''; // Access environment variable
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 const useSocket = () => {
   const dispatch = useDispatch();
@@ -26,6 +30,10 @@ const useSocket = () => {
 
     _socket.on('disconnect', () => {
       console.log('socket server disconnected.');
+    });
+
+    _socket.on('guestCount', (size: number) => {
+      dispatch(setGuestCount(size));
     });
 
     return () => {

@@ -4,11 +4,13 @@ import { Socket } from 'socket.io-client';
 interface SocketState {
   id: undefined | string;
   socket: any;
+  guestCount: number;
 }
 
 const initialState: SocketState = {
   id: undefined,
   socket: undefined,
+  guestCount: 0,
 } as const;
 
 export const socketSlice = createSlice({
@@ -27,6 +29,12 @@ export const socketSlice = createSlice({
     ) => {
       state.socket = action.payload;
     },
+    setGuestCount: (
+      state: Draft<typeof initialState>,
+      action: PayloadAction<typeof initialState.guestCount>
+    ) => {
+      state.guestCount = action.payload;
+    },
   },
 });
 
@@ -34,6 +42,7 @@ export const socketSlice = createSlice({
 export const getSocket = (state: { socket: SocketState }) => state.socket;
 
 // Exports all actions
-export const { setSocketId, setSocketInstance } = socketSlice.actions;
+export const { setSocketId, setSocketInstance, setGuestCount } =
+  socketSlice.actions;
 
 export default socketSlice.reducer;
