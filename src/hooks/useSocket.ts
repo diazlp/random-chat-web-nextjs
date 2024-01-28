@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from '@/store/store';
 import { io, Socket } from 'socket.io-client';
-import { setSocketId } from '@/store/slices/socketSlice';
+import { setSocketId, setSocketInstance } from '@/store/slices/socketSlice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''; // Access environment variable
 
@@ -9,7 +9,7 @@ const useSocket = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const socket = io(API_BASE_URL, {
+    const _socket = io(API_BASE_URL, {
       transports: ['websocket', 'polling'],
       forceNew: true,
       reconnectionAttempts: 10,
@@ -19,16 +19,17 @@ const useSocket = () => {
       },
     }) as Socket;
 
-    socket.on('connected', (socket: string) => {
-      dispatch(setSocketId(socket));
+    _socket.on('connected', (socketId: string) => {
+      dispatch(setSocketId(socketId));
+      dispatch(setSocketInstance(_socket));
     });
 
-    socket.on('disconnect', () => {
+    _socket.on('disconnect', () => {
       console.log('socket server disconnected.');
     });
 
     return () => {
-      socket.disconnect();
+      _socket.disconnect();
     };
   }, []);
 

@@ -6,10 +6,18 @@ import LoginLogoComponent from '@/components/home-page/login-logo';
 import ChatBoxComponent from '@/components/home-page/chat-box';
 import useSocket from '@/hooks/useSocket';
 import usePeer from '@/hooks/usePeer';
+import { useSelector } from 'react-redux';
+import { getSocket } from '@/store/slices/socketSlice';
 
 export default function MainPage(): React.ReactNode {
   useSocket();
   const { peer, peerId } = usePeer();
+
+  const { socket } = useSelector(getSocket);
+
+  const testF = () => {
+    socket.emit('joinRoom');
+  };
 
   return (
     <Box className="flex-1 flex flex-col px-3 md:px-8 py-6">
@@ -19,7 +27,7 @@ export default function MainPage(): React.ReactNode {
       </Flex>
 
       <div className="flex flex-col gap-5 h-full">
-        <div className="flex flex-col xl:flex-row align-middle gap-10 mt-5">
+        <div className="flex flex-col xl:flex-row align-middle gap-2 mt-5">
           <Box className="w-full bg-black flex xl:block align-top justify-end">
             <video
               playsInline

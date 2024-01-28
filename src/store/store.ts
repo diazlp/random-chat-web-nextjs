@@ -10,6 +10,15 @@ import {
  * Creates a store and includes all the slices as reducers.
  */
 export const store = configureStore({
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['socket/setSocketInstance'],
+        // Ignore these paths in the state
+        ignoredPaths: ['socket.socket'],
+      },
+    }),
   reducer: {
     socket: socketSlice,
     user: userSlice,
