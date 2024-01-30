@@ -45,10 +45,14 @@ const useSocket = () => {
       }
     );
 
+    _socket.on('leaveRoom', () => {
+      dispatch(setPeerParticipants([]));
+    });
+
     return () => {
       _socket.disconnect();
     };
-  }, []);
+  }, [dispatch]);
 
   return null;
 };

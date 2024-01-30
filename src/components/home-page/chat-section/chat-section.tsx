@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Box,
   TextFieldRoot,
@@ -6,7 +7,7 @@ import {
 } from '@radix-ui/themes';
 import { IoIosSend } from 'react-icons/io';
 
-export default function ChatBoxComponent(): React.ReactNode {
+export default function ChatSection(): React.ReactNode {
   return (
     <Box className="flex flex-col bg-neutral-100 h-full rounded-md justify-end">
       <div className="px-4 py-2">

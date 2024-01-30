@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from '@/store/store';
 import Peer from 'peerjs';
 import { setPeerId, setPeerInstance } from '@/store/slices/peerSlice';
 
 const usePeer = () => {
   const dispatch = useDispatch();
-  // const [rooms, setRooms] = useState<{ [roomId: string]: number }>({});
 
   useEffect(() => {
     // Initialize Peer connection
@@ -46,7 +45,7 @@ const usePeer = () => {
         _peer.destroy();
       }
     };
-  }, []);
+  }, [dispatch]);
 
   return null;
 };

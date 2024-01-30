@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box, Button } from '@radix-ui/themes';
 import Image from 'next/image';
 

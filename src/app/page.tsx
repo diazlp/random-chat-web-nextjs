@@ -1,6 +1,7 @@
+import React from 'react';
 import { Container, Flex } from '@radix-ui/themes';
 import NavigationBarComponent from '@/components/navigation-bar';
-import MainPage from '@/components/main-page';
+import HomePage from '@/components/home-page/home-page';
 
 export default function Home(): React.ReactNode {
   return (
@@ -10,7 +11,7 @@ export default function Home(): React.ReactNode {
     >
       <Flex className="flex flex-col-reverse md:flex-row h-screen w-screen border border-black-700">
         <NavigationBarComponent />
-        <MainPage />
+        <HomePage />
       </Flex>
     </Container>
   );

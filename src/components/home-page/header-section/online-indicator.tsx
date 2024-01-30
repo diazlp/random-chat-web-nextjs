@@ -1,3 +1,4 @@
+import React from 'react';
 import { formatNumber } from '@/utils';
 import { Box, Text } from '@radix-ui/themes';
 import { FaCircle } from 'react-icons/fa6';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box } from '@radix-ui/themes';
 import { FaMessage } from 'react-icons/fa6';
 import { RiGroupFill, RiSettings3Fill } from 'react-icons/ri';
