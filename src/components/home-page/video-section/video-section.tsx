@@ -1,13 +1,14 @@
 import React from 'react';
+import type { MutableRefObject, RefObject } from 'react';
 import { Box, Button } from '@radix-ui/themes';
 import { Socket } from 'socket.io-client';
 
 interface RandomVideoSectionProps {
   socket: Socket;
   peerId: string | undefined;
-  videoRef: any;
-  responsiveVideoRef: any;
-  partnerVideoRef: any;
+  videoRef: RefObject<HTMLVideoElement>;
+  responsiveVideoRef: RefObject<HTMLVideoElement>;
+  partnerVideoRef: RefObject<HTMLVideoElement>;
 }
 
 export default function RandomVideoSection({
@@ -17,8 +18,15 @@ export default function RandomVideoSection({
   responsiveVideoRef,
   partnerVideoRef,
 }: RandomVideoSectionProps): React.ReactNode {
-  const randomHandler = () => {
-    socket.emit('joinRoom', peerId);
+  const onRandomHandler = () => {
+    socket.emit('joinRandomRoom', peerId);
+  };
+
+  const onStopHandler = () => {
+    socket.emit('leaveRandomRoom', peerId);
+    if (partnerVideoRef.current) {
+      partnerVideoRef.current.srcObject = null;
+    }
   };
 
   return (
@@ -30,7 +38,6 @@ export default function RandomVideoSection({
           autoPlay
           width="100%"
           className="w-full h-full relative object-cover"
-          muted={true}
         />
 
         <div className="absolute xl:hidden w-3/12 h-3/12 object-cover bg-red-700 top-0 right-0">
@@ -48,11 +55,14 @@ export default function RandomVideoSection({
           <div className="flex flex-row gap-4">
             <Button
               className="xl:px-7 xl:py-5 xl:bg-gray-100 xl:text-black xl:font-semibold"
-              onClick={randomHandler}
+              onClick={onRandomHandler}
             >
               Ran
             </Button>
-            <Button className="xl:px-7 xl:py-5 xl:bg-red-100 xl:text-black xl:font-semibold">
+            <Button
+              className="xl:px-7 xl:py-5 xl:bg-red-100 xl:text-black xl:font-semibold"
+              onClick={onStopHandler}
+            >
               Stop
             </Button>
           </div>

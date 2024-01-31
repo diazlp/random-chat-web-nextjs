@@ -45,7 +45,7 @@ const useSocket = () => {
       }
     );
 
-    _socket.on('leaveRoom', () => {
+    _socket.on('leaveRandomRoom', () => {
       dispatch(setPeerParticipants([]));
     });
 

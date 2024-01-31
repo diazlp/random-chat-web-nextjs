@@ -8,43 +8,45 @@ const usePeer = () => {
 
   useEffect(() => {
     // Initialize Peer connection
-    const _peer = new Peer({
-      secure: true,
-      config: {
-        iceServers: [
-          { url: 'stun:stun.l.google.com:19302' },
-          {
-            url: 'turn:numb.viagenie.ca',
-            credential: 'muazkh',
-            username: 'webrtc@live.com',
-          },
-          { url: 'stun:stun1.l.google.com:19302' },
-          { url: 'stun:stun2.l.google.com:19302' },
-          { url: 'stun:stun3.l.google.com:19302' },
-          { url: 'stun:stun4.l.google.com:19302' },
-        ],
-      },
-    });
+    if (typeof window !== 'undefined') {
+      const _peer = new Peer({
+        secure: true,
+        config: {
+          iceServers: [
+            { url: 'stun:stun.l.google.com:19302' },
+            {
+              url: 'turn:numb.viagenie.ca',
+              credential: 'muazkh',
+              username: 'webrtc@live.com',
+            },
+            { url: 'stun:stun1.l.google.com:19302' },
+            { url: 'stun:stun2.l.google.com:19302' },
+            { url: 'stun:stun3.l.google.com:19302' },
+            { url: 'stun:stun4.l.google.com:19302' },
+          ],
+        },
+      });
 
-    // Peer open event
-    _peer.on('open', (peerId: string) => {
-      dispatch(setPeerId(peerId));
-      console.log(`Connected to PeerServer with ID: ${peerId}`);
-    });
+      // Peer open event
+      _peer.on('open', (peerId: string) => {
+        dispatch(setPeerId(peerId));
+        console.log(`Connected to PeerServer with ID: ${peerId}`);
+      });
 
-    // Peer error event
-    _peer.on('error', (err) => {
-      console.error('Peer error:', err);
-    });
+      // Peer error event
+      _peer.on('error', (err) => {
+        console.error('Peer error:', err);
+      });
 
-    dispatch(setPeerInstance(_peer));
+      dispatch(setPeerInstance(_peer));
 
-    // Clean up Peer connection on component unmount
-    return () => {
-      if (_peer) {
-        _peer.destroy();
-      }
-    };
+      // Clean up Peer connection on component unmount
+      return () => {
+        if (_peer) {
+          _peer.destroy();
+        }
+      };
+    }
   }, [dispatch]);
 
   return null;

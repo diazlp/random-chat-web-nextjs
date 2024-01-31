@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useRef } from 'react';
-import type { RefObject } from 'react';
+import type { MutableRefObject, RefObject } from 'react';
 import { Socket } from 'socket.io-client';
 import Peer from 'peerjs';
 
@@ -21,18 +23,20 @@ const useRandomVideo = ({
   const videoRef = useRef<HTMLVideoElement>(null);
   const responsiveVideoRef = useRef<HTMLVideoElement>(null);
   const partnerVideoRef = useRef<HTMLVideoElement>(null);
-  const callRef = useRef<any>(null);
+  const videoElement = useRef<any>(null);
   const myStream = useRef<any>(null);
-
-  // Check screen width and set the appropriate video element
-  const videoElement = window.innerWidth < 1280 ? responsiveVideoRef : videoRef;
+  const callRef = useRef<any>(null);
 
   useEffect(() => {
-    const getUserMedia = navigator.mediaDevices.getUserMedia;
+    // Check the window width and choose the appropriate video element
+    videoElement.current =
+      window.innerWidth < 1280 ? responsiveVideoRef.current : videoRef.current;
+  }, []);
 
+  useEffect(() => {
     const initWebcam = async () => {
       try {
-        const stream = await getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
           audio: true,
         });
@@ -42,7 +46,7 @@ const useRandomVideo = ({
           myStream.current = stream;
         }
       } catch (error) {
-        //no-empty
+        // Empty block statement
       }
     };
 
@@ -117,7 +121,7 @@ const useRandomVideo = ({
 
   useEffect(() => {
     if (socket) {
-      socket.on('leaveRoom', () => {
+      socket.on('leaveRandomRoom', () => {
         if (callRef.current) {
           callRef.current.close();
         }

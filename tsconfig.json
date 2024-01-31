@@ -21,6 +21,9 @@
       "@/*": ["./src/*"]
     }
   },
+  "rules": {
+    "@typescript-eslint/no-empty-function": "off"
+  },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
