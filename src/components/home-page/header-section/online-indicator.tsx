@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatNumber } from '@/utils';
+import { formatNumber } from '@/lib/utils';
 import { Box, Text } from '@radix-ui/themes';
 import { LuLoader2 } from 'react-icons/lu';
 import { FaCircle } from 'react-icons/fa6';

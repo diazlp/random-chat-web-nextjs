@@ -7,7 +7,7 @@ export default function Home(): React.ReactNode {
   return (
     <Container
       display={'block'}
-      className="max-h-screen w-screen overflow-hidden"
+      className="max-h-screen w-screen overflow-x-hidden"
     >
       <Flex className="flex flex-col-reverse md:flex-row h-screen w-screen border border-black-700">
         <NavigationBarComponent />

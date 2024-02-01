@@ -93,7 +93,7 @@ export default function RandomVideoSection({
                 </Button>
                 <Button
                   className="xl:px-7 xl:py-5 xl:bg-purple-400 xl:text-black xl:font-semibold"
-                  // onClick={onStopHandler}
+                  // onClick={onRequestHandler}
                 >
                   Request
                 </Button>
