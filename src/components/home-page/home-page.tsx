@@ -18,7 +18,12 @@ export default function HomePage(): React.ReactNode {
 
   const { peer, id, remote } = useSelector(getPeer);
   const { socket, guest } = useSelector(getSocket);
-  const { videoRef, responsiveVideoRef, partnerVideoRef } = useRandomVideo({
+  const {
+    videoRef,
+    responsiveVideoRef,
+    partnerVideoRef,
+    myStream: mediaStream,
+  } = useRandomVideo({
     socket,
     peer,
     partner: remote.participants.find((e) => e.peerId !== id),
@@ -37,6 +42,8 @@ export default function HomePage(): React.ReactNode {
           videoRef={videoRef}
           responsiveVideoRef={responsiveVideoRef}
           partnerVideoRef={partnerVideoRef}
+          mediaStream={mediaStream}
+          partner={remote.participants.find((e) => e.peerId !== id)}
         />
         <ChatSection />
       </Flex>

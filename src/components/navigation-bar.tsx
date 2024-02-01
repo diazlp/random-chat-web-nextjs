@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function NavigationBarComponent(): React.ReactNode {
   return (
     <Box className="flex flex-row md:flex-col md:w-28 p-4 bg-neutral-100 text-center justify-center items-center gap-10 w-screen h-16 md:h-screen">
-      <div></div>
+      {/* <div></div> */}
 
       <div>
         <RiGroupFill className="text-xl md:text-2xl text-zinc-400" />

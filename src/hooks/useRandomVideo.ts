@@ -19,6 +19,7 @@ const useRandomVideo = ({
   videoRef: RefObject<HTMLVideoElement>;
   responsiveVideoRef: RefObject<HTMLVideoElement>;
   partnerVideoRef: RefObject<HTMLVideoElement>;
+  myStream: MutableRefObject<any>;
 } => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const responsiveVideoRef = useRef<HTMLVideoElement>(null);
@@ -133,6 +134,7 @@ const useRandomVideo = ({
     videoRef,
     responsiveVideoRef,
     partnerVideoRef,
+    myStream,
   };
 };
 
