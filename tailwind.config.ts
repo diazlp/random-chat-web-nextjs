@@ -8,6 +8,19 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        gradient: 'gradient 1s ease infinite',
+      },
+      keyframes: {
+        gradient: {
+          '0%': {
+            backgroundPosition: '100% 50%',
+          },
+          '100%': {
+            backgroundPosition: '-100% 50%',
+          },
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

@@ -43,6 +43,7 @@ export default function HomePage(): React.ReactNode {
           responsiveVideoRef={responsiveVideoRef}
           partnerVideoRef={partnerVideoRef}
           mediaStream={mediaStream}
+          partnerLoading={remote.loading}
           partner={remote.participants.find((e) => e.peerId !== id)}
         />
         <ChatSection />

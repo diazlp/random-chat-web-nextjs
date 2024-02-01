@@ -12,7 +12,7 @@ export default function HeaderSection({
   return (
     <Fragment>
       <LoginLogoComponent />
-      <OnlineIndicatorComponent size={guest.count} />
+      <OnlineIndicatorComponent size={guest.count} loading={guest.loading} />
     </Fragment>
   );
 }

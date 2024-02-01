@@ -1,4 +1,9 @@
-import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  Draft,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
 
 interface SocketState {
@@ -14,10 +19,17 @@ const initialState: SocketState = {
   id: undefined,
   socket: undefined,
   guest: {
-    count: 0,
     loading: false,
+    count: 0,
   },
 } as const;
+
+export const setGuestCount = createAsyncThunk(
+  'socket/setGuestCount',
+  async (count: number) => {
+    return count;
+  }
+);
 
 export const socketSlice = createSlice({
   name: 'socket',
@@ -35,12 +47,18 @@ export const socketSlice = createSlice({
     ) => {
       state.socket = action.payload;
     },
-    setGuestCount: (
-      state: Draft<typeof initialState>,
-      action: PayloadAction<typeof initialState.guest.count>
-    ) => {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setGuestCount.pending, (state) => {
+      state.guest.loading = true;
+    });
+    builder.addCase(setGuestCount.fulfilled, (state, action) => {
+      state.guest.loading = false;
       state.guest.count = action.payload;
-    },
+    });
+    builder.addCase(setGuestCount.rejected, (state) => {
+      state.guest.loading = false;
+    });
   },
 });
 
@@ -48,7 +66,6 @@ export const socketSlice = createSlice({
 export const getSocket = (state: { socket: SocketState }) => state.socket;
 
 // Exports all actions
-export const { setSocketId, setSocketInstance, setGuestCount } =
-  socketSlice.actions;
+export const { setSocketId, setSocketInstance } = socketSlice.actions;
 
 export default socketSlice.reducer;

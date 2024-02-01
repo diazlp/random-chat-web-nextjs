@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import type { MutableRefObject, RefObject } from 'react';
+import { useDispatch } from '@/store/store';
+import { setRemoteLoadingState } from '@/store/slices/peerSlice';
 import { Box, Button } from '@radix-ui/themes';
 import { Socket } from 'socket.io-client';
 import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
@@ -12,6 +14,7 @@ interface RandomVideoSectionProps {
   responsiveVideoRef: RefObject<HTMLVideoElement>;
   partnerVideoRef: RefObject<HTMLVideoElement>;
   mediaStream: MutableRefObject<any>;
+  partnerLoading: boolean;
   partner: { clientId: string; peerId: string } | undefined;
 }
 
@@ -22,13 +25,17 @@ export default function RandomVideoSection({
   responsiveVideoRef,
   partnerVideoRef,
   mediaStream,
+  partnerLoading,
   partner,
 }: RandomVideoSectionProps): React.ReactNode {
+  const dispatch = useDispatch();
+
   const [isAudioEnabled, setIsAudioEnabled] = useState<boolean>(true);
   const [isVideoEnabled, setIsVideoEnabled] = useState<boolean>(true);
 
   const onRandomHandler = () => {
     socket.emit('joinRandomRoom', peerId);
+    dispatch(setRemoteLoadingState(true));
   };
 
   const onStopHandler = () => {
@@ -93,7 +100,15 @@ export default function RandomVideoSection({
               </Fragment>
             ) : (
               <Button
-                className="xl:px-7 xl:py-5 xl:bg-gray-100 xl:text-black xl:font-semibold"
+                className={`xl:px-7 xl:py-5 xl:bg-gray-100 xl:text-black xl:font-semibold 
+                ${
+                  partnerLoading
+                    ? `bg-gradient-to-r from-transparent to-purple-400 
+                bg-[length:200%_auto] 
+                animate-gradient`
+                    : ''
+                }
+               `}
                 onClick={onRandomHandler}
               >
                 Ran
