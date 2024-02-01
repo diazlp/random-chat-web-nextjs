@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import type { Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import '@radix-ui/themes/styles.css';
 import './globals.css';
@@ -8,6 +9,13 @@ import { Theme } from '@radix-ui/themes';
 import StoreProvider from './store-provider';
 
 const inter = Inter({ subsets: ['latin'] });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: 'RanChat V2',

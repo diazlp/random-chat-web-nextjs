@@ -5,11 +5,8 @@ import HomePage from '@/components/home-page/home-page';
 
 export default function Home(): React.ReactNode {
   return (
-    <Container
-      display={'block'}
-      className="max-h-screen w-screen overflow-x-hidden"
-    >
-      <Flex className="flex flex-col-reverse md:flex-row h-screen w-screen border border-black-700">
+    <Container display={'block'} className="max-h-screen w-screen">
+      <Flex className="flex flex-col-reverse md:flex-row h-screen w-screen border border-black-700 overflow-y-auto xl:overflow-hidden">
         <NavigationBarComponent />
         <HomePage />
       </Flex>

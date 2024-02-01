@@ -26,6 +26,14 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      screens: {
+        xxsh: { raw: '(min-height: 500px)' },
+        xsh: { raw: '(min-height: 675px)' },
+        mdh: { raw: '(min-height: 820px)' },
+        lgh: { raw: '(min-height: 900px)' },
+        xlh: { raw: '(min-height: 1024px)' },
+        // => @media (max-height: 1234px) { ... }
+      },
     },
   },
   plugins: [],

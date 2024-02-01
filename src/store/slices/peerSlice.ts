@@ -12,6 +12,7 @@ interface PeerState {
   remote: {
     loading: boolean;
     participants: { clientId: string; peerId: string }[];
+    messages: { clientId: string | undefined; message: string; time: Date }[];
   };
 }
 
@@ -21,6 +22,7 @@ const initialState: PeerState = {
   remote: {
     loading: false,
     participants: [],
+    messages: [],
   },
 } as const;
 
@@ -53,6 +55,15 @@ export const peerSlice = createSlice({
     ) => {
       state.remote.loading = action.payload;
     },
+    setRemoteMessage: (
+      state: Draft<typeof initialState>,
+      action: PayloadAction<typeof initialState.remote.messages>
+    ) => {
+      state.remote.messages = [...state.remote.messages, ...action.payload];
+    },
+    clearRemoteMessages: (state: Draft<typeof initialState>) => {
+      state.remote.messages = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(setPeerParticipants.pending, (state) => {
@@ -72,7 +83,12 @@ export const peerSlice = createSlice({
 export const getPeer = (state: { peer: PeerState }) => state.peer;
 
 // Exports all actions
-export const { setPeerInstance, setPeerId, setRemoteLoadingState } =
-  peerSlice.actions;
+export const {
+  setPeerInstance,
+  setPeerId,
+  setRemoteLoadingState,
+  setRemoteMessage,
+  clearRemoteMessages,
+} = peerSlice.actions;
 
 export default peerSlice.reducer;

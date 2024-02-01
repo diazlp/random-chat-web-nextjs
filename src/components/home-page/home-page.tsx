@@ -16,8 +16,8 @@ export default function HomePage(): React.ReactNode {
   useSocket();
   usePeer();
 
-  const { peer, id, remote } = useSelector(getPeer);
-  const { socket, guest } = useSelector(getSocket);
+  const { peer, id: peerId, remote } = useSelector(getPeer);
+  const { id: clientId, socket, guest } = useSelector(getSocket);
   const {
     videoRef,
     responsiveVideoRef,
@@ -26,7 +26,7 @@ export default function HomePage(): React.ReactNode {
   } = useRandomVideo({
     socket,
     peer,
-    partner: remote.participants.find((e) => e.peerId !== id),
+    partner: remote.participants.find((e) => e.peerId !== peerId),
   });
 
   return (
@@ -35,18 +35,18 @@ export default function HomePage(): React.ReactNode {
         <HeaderSection guest={guest} />
       </Flex>
 
-      <Flex direction="column" gap={'5'} className="h-full">
+      <Flex direction="column" gap={'5'} className="h-full overflow-hidden">
         <RandomVideoSection
           socket={socket}
-          peerId={id}
+          peerId={peerId}
           videoRef={videoRef}
           responsiveVideoRef={responsiveVideoRef}
           partnerVideoRef={partnerVideoRef}
           mediaStream={mediaStream}
           partnerLoading={remote.loading}
-          partner={remote.participants.find((e) => e.peerId !== id)}
+          partner={remote.participants.find((e) => e.peerId !== peerId)}
         />
-        <ChatSection />
+        <ChatSection socket={socket} clientId={clientId} />
       </Flex>
     </Box>
   );

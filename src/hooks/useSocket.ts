@@ -6,7 +6,11 @@ import {
   setSocketInstance,
   setGuestCount,
 } from '@/store/slices/socketSlice';
-import { setPeerParticipants } from '@/store/slices/peerSlice';
+import {
+  setPeerParticipants,
+  setRemoteMessage,
+  clearRemoteMessages,
+} from '@/store/slices/peerSlice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -42,12 +46,29 @@ const useSocket = () => {
       'guestParticipants',
       (participants: { clientId: string; peerId: string }[]) => {
         dispatch(setPeerParticipants(participants));
+        dispatch(clearRemoteMessages());
       }
     );
 
     _socket.on('leaveRandomRoom', () => {
       dispatch(setPeerParticipants([]));
+      dispatch(
+        setRemoteMessage([
+          {
+            clientId: undefined,
+            message: 'The chat session has ended.',
+            time: new Date(),
+          },
+        ])
+      );
     });
+
+    _socket.on(
+      'sendRandomMessage',
+      (data: { clientId: string; message: string; time: Date }) => {
+        dispatch(setRemoteMessage([data]));
+      }
+    );
 
     return () => {
       _socket.disconnect();
