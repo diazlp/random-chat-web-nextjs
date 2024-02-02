@@ -7,7 +7,7 @@ import useSocket from '@/hooks/useSocket';
 import usePeer from '@/hooks/usePeer';
 import useRandomVideo from '@/hooks/useRandomVideo';
 import { getSocket } from '@/store/slices/socketSlice';
-import { getPeer } from '@/store/slices/peerSlice';
+import { getPeerState } from '@/store/slices/peerSlice';
 import ChatSection from './chat-section/chat-section';
 import RandomVideoSection from './video-section/video-section';
 import HeaderSection from './header-section/header-section';
@@ -16,7 +16,7 @@ export default function HomePage(): React.ReactNode {
   useSocket();
   usePeer();
 
-  const { peer, id: peerId, remote } = useSelector(getPeer);
+  const { peer, id: peerId, remote } = useSelector(getPeerState);
   const { id: clientId, socket, guest } = useSelector(getSocket);
   const {
     videoRef,

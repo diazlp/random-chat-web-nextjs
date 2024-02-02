@@ -6,13 +6,23 @@ import {
 } from '@reduxjs/toolkit';
 import Peer from 'peerjs';
 
+export enum RandomParticipantType {
+  You = 'you',
+  Guest = 'guest',
+  System = 'system',
+}
+
 export interface PeerState {
   id: undefined | string;
   peer: any;
   remote: {
     loading: boolean;
     participants: { clientId: string; peerId: string }[];
-    messages: { clientId: string | undefined; message: string; time: Date }[];
+    messages: {
+      clientId: string | undefined;
+      message: string;
+      time: Date | string;
+    }[];
   };
 }
 
@@ -80,7 +90,7 @@ export const peerSlice = createSlice({
 });
 
 // A helper of peer state for `useSelector` function.
-export const getPeer = (state: { peer: PeerState }) => state.peer;
+export const getPeerState = (state: { peer: PeerState }) => state.peer;
 
 // Exports all actions
 export const {

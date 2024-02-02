@@ -1,8 +1,33 @@
 import React from 'react';
 import * as Popover from '@radix-ui/react-popover';
+import { Socket } from 'socket.io-client';
+import { useSelector } from 'react-redux';
+import { getGameState } from '@/store/slices/gameSlice';
+import { GameChallengeTitle } from './enum/game.enum';
 import { GiConsoleController } from 'react-icons/gi';
+import { LuLoader2 } from 'react-icons/lu';
 
-export default function GamePopoverComponent(): React.ReactNode {
+interface GamePopoverComponentProps {
+  socket: Socket;
+}
+
+export default function GamePopoverComponent({
+  socket,
+}: GamePopoverComponentProps): React.ReactNode {
+  const { loading, status } = useSelector(getGameState);
+
+  const onSelectGameHandler = (title: string) => {
+    socket.emit('userSelectGame', title);
+  };
+
+  if (loading) {
+    return <LuLoader2 className="animate-spin" />;
+  }
+
+  if (status) {
+    return <></>;
+  }
+
   return (
     <Popover.Root>
       <Popover.Trigger>
@@ -17,11 +42,14 @@ export default function GamePopoverComponent(): React.ReactNode {
             <p className="text-[12px] xl:text-[15px] leading-[19px] font-medium mb-2.5 px-5">
               Select multiplayer game
             </p>
-            <fieldset className="cursor-pointer hover:bg-neutral-200 w-full px-5 items-center justify-center py-1">
-              <p className="text-[11px] xl:text-[14px] ">
+            <button
+              className="cursor-pointer hover:bg-neutral-200 w-full px-5 items-center justify-center py-1"
+              onClick={() => onSelectGameHandler(GameChallengeTitle.Trivia)}
+            >
+              <p className="text-[11px] xl:text-[14px]">
                 Trivia Triumph: Blank Frenzy
               </p>
-            </fieldset>
+            </button>
           </div>
           <Popover.Arrow className="fill-white" />
         </Popover.Content>

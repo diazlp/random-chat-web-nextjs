@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
+import { type SocketState } from '@/store/slices/socketSlice';
 import LoginLogoComponent from './login-logo';
 import OnlineIndicatorComponent from './online-indicator';
 
 interface HeaderSectionProps {
-  guest: { count: number; loading: boolean };
+  guest: SocketState['guest'];
 }
 
 export default function HeaderSection({
@@ -12,7 +13,11 @@ export default function HeaderSection({
   return (
     <Fragment>
       <LoginLogoComponent />
-      <OnlineIndicatorComponent size={guest.count} loading={guest.loading} />
+      <OnlineIndicatorComponent
+        init={guest.init}
+        size={guest.count}
+        loading={guest.loading}
+      />
     </Fragment>
   );
 }

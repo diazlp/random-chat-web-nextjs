@@ -1,5 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import type { PeerState } from '@/store/slices/peerSlice';
+import {
+  RandomParticipantType,
+  type PeerState,
+} from '@/store/slices/peerSlice';
 import { Text } from '@radix-ui/themes';
 import { format } from 'timeago.js';
 
@@ -31,7 +34,7 @@ export default function ChatMessageComponent({
    "
     >
       {remote.messages.map((msg, i) =>
-        msg.clientId ? (
+        msg.clientId !== RandomParticipantType.System ? (
           <div
             key={i}
             ref={messageRef}
@@ -42,7 +45,9 @@ export default function ChatMessageComponent({
           >
             <div className="flex flex-row gap-2">
               <span className="italic font-semibold">
-                {msg.clientId === clientId ? 'you' : 'guest'}
+                {msg.clientId === clientId
+                  ? RandomParticipantType.You
+                  : RandomParticipantType.Guest}
               </span>
               <span className="italic text-gray-400">- {format(msg.time)}</span>
             </div>
@@ -52,6 +57,7 @@ export default function ChatMessageComponent({
           <div
             className="flex flex-col items-center italic font-bold text-xs"
             ref={messageRef}
+            key={i}
           >
             {msg.message}
           </div>

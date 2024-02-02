@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import socketSlice from './slices/socketSlice';
 import peerSlice from './slices/peerSlice';
+import gameSlice from './slices/gameSlice';
 import userSlice from './slices/userSlice';
 import {
   useDispatch as useDispatchBase,
@@ -23,6 +24,7 @@ export const store = configureStore({
   reducer: {
     socket: socketSlice,
     peer: peerSlice,
+    game: gameSlice,
     user: userSlice,
   },
 });

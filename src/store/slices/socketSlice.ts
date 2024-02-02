@@ -6,12 +6,13 @@ import {
 } from '@reduxjs/toolkit';
 import { Socket } from 'socket.io-client';
 
-interface SocketState {
+export interface SocketState {
   id: undefined | string;
   socket: any;
   guest: {
-    count: number;
+    init: boolean;
     loading: boolean;
+    count: number;
   };
 }
 
@@ -19,6 +20,7 @@ const initialState: SocketState = {
   id: undefined,
   socket: undefined,
   guest: {
+    init: false,
     loading: false,
     count: 0,
   },
@@ -54,9 +56,11 @@ export const socketSlice = createSlice({
     });
     builder.addCase(setGuestCount.fulfilled, (state, action) => {
       state.guest.loading = false;
+      state.guest.init = true;
       state.guest.count = action.payload;
     });
     builder.addCase(setGuestCount.rejected, (state) => {
+      state.guest.init = true;
       state.guest.loading = false;
     });
   },

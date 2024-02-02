@@ -9,10 +9,25 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        popover: 'popover 700ms cubic-bezier(0.16, 1, 0.3, 1)',
         gradient: 'gradient 1s ease infinite',
+        popover: 'popover 700ms cubic-bezier(0.16, 1, 0.3, 1)',
+        requestGameOverlay:
+          'requestGameOverlay 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        requestGameContent:
+          'requestGameContent 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
+        requestGameOverlay: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        requestGameContent: {
+          from: {
+            opacity: '0',
+            transform: 'translate(-50%, -48%) scale(0.96)',
+          },
+          to: { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
+        },
         popover: {
           from: { opacity: '0', transform: 'translateY(2px)' },
           to: { opacity: '1', transform: 'translateY(0)' },

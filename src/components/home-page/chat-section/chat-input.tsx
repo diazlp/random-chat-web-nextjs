@@ -56,7 +56,7 @@ export default function ChatInputComponent({
           }}
         />
         <TextFieldSlot>
-          <GamePopoverComponent />
+          <GamePopoverComponent socket={socket} />
           <MdEmojiEmotions
             className="hidden xl:block text-xl md:text-2xl text-zinc-400 cursor-pointer"
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}

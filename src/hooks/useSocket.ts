@@ -7,10 +7,16 @@ import {
   setGuestCount,
 } from '@/store/slices/socketSlice';
 import {
+  RandomParticipantType,
   setPeerParticipants,
   setRemoteMessage,
   clearRemoteMessages,
 } from '@/store/slices/peerSlice';
+import {
+  resetGameState,
+  setInitiateGame,
+  setStartGame,
+} from '@/store/slices/gameSlice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -52,12 +58,13 @@ const useSocket = () => {
 
     _socket.on('leaveRandomRoom', () => {
       dispatch(setPeerParticipants([]));
+      dispatch(resetGameState());
       dispatch(
         setRemoteMessage([
           {
-            clientId: undefined,
+            clientId: RandomParticipantType.System,
             message: 'The chat session has ended.',
-            time: new Date(),
+            time: new Date().toISOString(),
           },
         ])
       );
@@ -69,6 +76,53 @@ const useSocket = () => {
         dispatch(setRemoteMessage([data]));
       }
     );
+
+    _socket.on(
+      'userSelectGame',
+      ({ title, clientId }: { title: string; clientId: string }) => {
+        dispatch(
+          setInitiateGame({
+            title,
+            requestedBy: clientId,
+          })
+        );
+      }
+    );
+
+    _socket.on(
+      'acceptGameChallenge',
+      (clients: { clientId: string; peerId: string; isReady: boolean }[]) => {
+        const players = clients.map((client) => ({
+          clientId: client.clientId,
+          scores: 0,
+        }));
+
+        dispatch(setStartGame(players));
+        dispatch(
+          setRemoteMessage([
+            {
+              clientId: RandomParticipantType.System,
+              message:
+                'Game challenge accepted. Type "STOP" to quit challenge.',
+              time: new Date().toISOString(),
+            },
+          ])
+        );
+      }
+    );
+
+    _socket.on('rejectGameChallenge', () => {
+      dispatch(resetGameState());
+      dispatch(
+        setRemoteMessage([
+          {
+            clientId: RandomParticipantType.System,
+            message: 'Game challenge rejected.',
+            time: new Date().toISOString(),
+          },
+        ])
+      );
+    });
 
     return () => {
       _socket.disconnect();
