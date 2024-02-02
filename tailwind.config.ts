@@ -9,9 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
+        popover: 'popover 700ms cubic-bezier(0.16, 1, 0.3, 1)',
         gradient: 'gradient 1s ease infinite',
       },
       keyframes: {
+        popover: {
+          from: { opacity: '0', transform: 'translateY(2px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
         gradient: {
           '0%': {
             backgroundPosition: '100% 50%',

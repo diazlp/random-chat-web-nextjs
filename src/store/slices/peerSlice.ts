@@ -6,7 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import Peer from 'peerjs';
 
-interface PeerState {
+export interface PeerState {
   id: undefined | string;
   peer: any;
   remote: {
