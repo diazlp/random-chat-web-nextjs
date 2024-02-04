@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Box, Flex } from '@radix-ui/themes';
+import { Box } from '@radix-ui/themes';
 import { useSelector } from 'react-redux';
 import useSocket from '@/hooks/useSocket';
 import usePeer from '@/hooks/usePeer';
@@ -31,23 +31,20 @@ export default function HomePage(): React.ReactNode {
 
   return (
     <Box className="flex-1 flex flex-col px-3 md:px-8 py-6">
-      <Flex align={'center'} justify={'between'}>
-        <HeaderSection guest={guest} />
-      </Flex>
+      <HeaderSection guest={guest} />
 
-      <Flex direction="column" gap={'5'} className="h-full overflow-hidden">
-        <RandomVideoSection
-          socket={socket}
-          peerId={peerId}
-          videoRef={videoRef}
-          responsiveVideoRef={responsiveVideoRef}
-          partnerVideoRef={partnerVideoRef}
-          mediaStream={mediaStream}
-          partnerLoading={remote.loading}
-          partner={remote.participants.find((e) => e.peerId !== peerId)}
-        />
-        <ChatSection socket={socket} clientId={clientId} />
-      </Flex>
+      <RandomVideoSection
+        socket={socket}
+        peerId={peerId}
+        videoRef={videoRef}
+        responsiveVideoRef={responsiveVideoRef}
+        partnerVideoRef={partnerVideoRef}
+        mediaStream={mediaStream}
+        partnerLoading={remote.loading}
+        partner={remote.participants.find((e) => e.peerId !== peerId)}
+      />
+
+      <ChatSection socket={socket} clientId={clientId} />
     </Box>
   );
 }
