@@ -1,7 +1,10 @@
 {
   "name": "ranchat-v2-web",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Next.js application providing a seamless user experience for multiplayer chat-based games, offering a diverse selection of interactive challenges and real-time connections between participants.",
   "private": true,
+  "author": "Diaz Linggaputra",
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

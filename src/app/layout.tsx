@@ -18,8 +18,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'RanChat V2',
-  description: 'Random Video Chat Application',
+  title: 'RanChat Web',
+  description: 'Random Video Chat Web Application',
   authors: [{ name: 'Diaz Linggaputra' }],
 };
 

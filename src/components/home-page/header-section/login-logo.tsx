@@ -21,8 +21,8 @@ export default function LoginLogoComponent(): React.ReactNode {
           height={'55'}
         />
       </div>
-      <Button radius={'small'}>Login</Button>
-      <Button radius={'small'}>Register</Button>
+      {/* <Button radius={'small'}>Login</Button> */}
+      {/* <Button radius={'small'}>Register</Button> */}
     </Box>
   );
 }

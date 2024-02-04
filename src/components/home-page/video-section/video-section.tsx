@@ -91,12 +91,12 @@ export default function RandomVideoSection({
                 >
                   Stop
                 </Button>
-                <Button
+                {/* <Button
                   className="xl:px-7 xl:py-5 xl:bg-purple-400 xl:text-black xl:font-semibold cursor-not-allowed opacity-50"
                   // onClick={onRequestHandler}
                 >
                   Request
-                </Button>
+                </Button> */}
               </Fragment>
             ) : (
               <Button
