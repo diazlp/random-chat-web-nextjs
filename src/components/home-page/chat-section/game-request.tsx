@@ -43,8 +43,8 @@ export default function GameRequestModalComponent({
           </Dialog.Title>
           <Dialog.Description className="mt-[10px] mb-8 text-[12px] xl:text-[15px] leading-normal">
             Fill in the blanks before your opponents do! Type &#8202;
-            <span className="italic font-bold">"Hint"</span> command to gain the
-            answer clue.
+            <span className="italic font-bold">"/hint"</span> command to gain
+            the answer clue.
           </Dialog.Description>
           <div className="flex flex-row items-center justify-around gap-2">
             <Button

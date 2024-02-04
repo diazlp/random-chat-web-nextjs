@@ -1,4 +1,11 @@
-import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  Draft,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+import { createSystemMessage, getPlayerScore } from '@/lib/utils';
+import { setRemoteMessage } from './peerSlice';
 
 interface GameState {
   loading: boolean;
@@ -18,6 +25,29 @@ const initialState: GameState = {
   players: [],
   requestedBy: null,
 };
+
+export const setGuessedAnswer = createAsyncThunk(
+  'game/setGuessedAnswer',
+  async (payload: string, { getState, dispatch }) => {
+    const state = getState() as Draft<any>;
+    const clientId = state.socket.id;
+
+    const yourScore = getPlayerScore(state.game.players, clientId);
+    const guestScores = getPlayerScore(state.game.players, clientId, true);
+
+    const messages = [
+      createSystemMessage(
+        "You are correct! Type '/next' for the next question."
+      ),
+      createSystemMessage('Current Score'),
+      createSystemMessage(`Yours: ${yourScore}  |   Guest: ${guestScores}`),
+    ];
+
+    dispatch(setRemoteMessage(messages));
+
+    return payload;
+  }
+);
 
 export const gameSlice = createSlice({
   name: 'game',
@@ -45,6 +75,17 @@ export const gameSlice = createSlice({
       state.status = true;
       state.players = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setGuessedAnswer.pending, (state, action) => {
+      const payload = action.meta.arg;
+
+      state.players = state.players.map((player) =>
+        player.clientId === payload
+          ? { ...player, scores: player.scores + 5 }
+          : player
+      );
+    });
   },
 });
 

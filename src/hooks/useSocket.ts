@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createSystemMessage } from '@/lib/utils';
 import { useDispatch } from '@/store/store';
 import { io, Socket } from 'socket.io-client';
 import {
@@ -7,7 +8,6 @@ import {
   setGuestCount,
 } from '@/store/slices/socketSlice';
 import {
-  RandomParticipantType,
   setPeerParticipants,
   setRemoteMessage,
   clearRemoteMessages,
@@ -16,6 +16,7 @@ import {
   resetGameState,
   setInitiateGame,
   setStartGame,
+  setGuessedAnswer,
 } from '@/store/slices/gameSlice';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -60,13 +61,7 @@ const useSocket = () => {
       dispatch(setPeerParticipants([]));
       dispatch(resetGameState());
       dispatch(
-        setRemoteMessage([
-          {
-            clientId: RandomParticipantType.System,
-            message: 'The chat session has ended.',
-            time: new Date().toISOString(),
-          },
-        ])
+        setRemoteMessage([createSystemMessage('The chat session has ended.')])
       );
     });
 
@@ -100,12 +95,9 @@ const useSocket = () => {
         dispatch(setStartGame(players));
         dispatch(
           setRemoteMessage([
-            {
-              clientId: RandomParticipantType.System,
-              message:
-                'Game challenge accepted. Type "STOP" to quit challenge.',
-              time: new Date().toISOString(),
-            },
+            createSystemMessage(
+              'Game challenge accepted. Type "/stop" to quit challenge.'
+            ),
           ])
         );
       }
@@ -114,15 +106,24 @@ const useSocket = () => {
     _socket.on('rejectGameChallenge', () => {
       dispatch(resetGameState());
       dispatch(
-        setRemoteMessage([
-          {
-            clientId: RandomParticipantType.System,
-            message: 'Game challenge rejected.',
-            time: new Date().toISOString(),
-          },
-        ])
+        setRemoteMessage([createSystemMessage('Game challenge rejected.')])
       );
     });
+
+    _socket.on('stopGameChallenge', () => {
+      dispatch(resetGameState());
+    });
+
+    _socket.on('guessedGameChallenge', (clientId: string) => {
+      dispatch(setGuessedAnswer(clientId));
+    });
+
+    _socket.on(
+      'sendGameChallenge',
+      (data: { clientId: string; message: string; time: Date }) => {
+        dispatch(setRemoteMessage([data]));
+      }
+    );
 
     return () => {
       _socket.disconnect();

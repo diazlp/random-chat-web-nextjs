@@ -38,7 +38,7 @@ export default function ChatInputComponent({
     <div className="relative px-4 py-2">
       {showEmojiPicker && (
         <div className="hidden xl:block absolute right-0 bottom-full">
-          <EmojiPicker lazyLoadEmojis onEmojiClick={onEmojiClickHandler} />
+          <EmojiPicker onEmojiClick={onEmojiClickHandler} />
         </div>
       )}
       <TextFieldRoot>
