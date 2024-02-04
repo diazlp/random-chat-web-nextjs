@@ -55,7 +55,7 @@ export default function ChatMessageComponent({
           </div>
         ) : (
           <div
-            className="flex flex-col items-center italic font-bold text-xs"
+            className="flex flex-col items-center italic font-bold text-xs my-1"
             ref={messageRef}
             key={i}
           >

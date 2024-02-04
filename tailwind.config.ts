@@ -11,16 +11,10 @@ const config: Config = {
       animation: {
         gradient: 'gradient 1s ease infinite',
         popover: 'popover 700ms cubic-bezier(0.16, 1, 0.3, 1)',
-        requestGameOverlay:
-          'requestGameOverlay 150ms cubic-bezier(0.16, 1, 0.3, 1)',
         requestGameContent:
           'requestGameContent 150ms cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
-        requestGameOverlay: {
-          from: { opacity: '0' },
-          to: { opacity: '1' },
-        },
         requestGameContent: {
           from: {
             opacity: '0',
