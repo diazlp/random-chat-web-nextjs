@@ -20,7 +20,7 @@ export default function ChatSection({
 
   return (
     <Fragment>
-      <Box className="flex flex-col bg-neutral-100 h-full rounded-md justify-end overflow-y-visible mt-5">
+      <Box className="flex flex-col bg-neutral-100 h-full rounded-md overflow-y-auto justify-end mt-5">
         <ChatMessageComponent remote={remote} clientId={clientId} />
         <ChatInputComponent socket={socket} clientId={clientId} />
       </Box>

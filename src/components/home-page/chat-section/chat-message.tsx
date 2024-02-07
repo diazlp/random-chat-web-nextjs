@@ -28,11 +28,7 @@ export default function ChatMessageComponent({
   }, [remote.messages]);
 
   return (
-    <div
-      className="px-4 py-2 overflow-y-scroll scroll-smooth 
-  max-h-[130px] xsh:max-h-[140px] mdh:max-h-[350px] lgh:max-h-[800px]
-   "
-    >
+    <div className="px-4 py-2 overflow-y-scroll scroll-smooth">
       {remote.messages.map((msg, i) =>
         msg.clientId !== RandomParticipantType.System ? (
           <div

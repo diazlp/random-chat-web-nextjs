@@ -30,7 +30,7 @@ export default function HomePage(): React.ReactNode {
   });
 
   return (
-    <Box className="flex-1 flex flex-col px-3 md:px-8 py-6">
+    <Box className="flex-1 flex flex-col p-3 md:px-8 md:py-6 overflow-y-auto">
       <HeaderSection guest={guest} />
 
       <RandomVideoSection

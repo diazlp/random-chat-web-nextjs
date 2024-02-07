@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { TextFieldRoot, TextFieldInput, TextFieldSlot } from '@radix-ui/themes';
 import { Socket } from 'socket.io-client';
-import EmojiPicker from '@/lib/EmojiPicker';
 import GamePopoverComponent from './game-popover';
-import { MdEmojiEmotions } from 'react-icons/md';
+import EmojiPopoverComponent from './emoji-popover';
 import { IoIosSend } from 'react-icons/io';
 
 interface ChatInputComponentProps {
@@ -15,12 +14,7 @@ export default function ChatInputComponent({
   socket,
   clientId,
 }: ChatInputComponentProps): React.ReactNode {
-  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
   const [clientMessage, setClientMessage] = useState<string>('');
-
-  const onEmojiClickHandler = ({ emoji }: { emoji: string }) => {
-    setClientMessage((prevMessage) => prevMessage + emoji);
-  };
 
   const onSendMessageHandler = () => {
     if (clientMessage) {
@@ -30,17 +24,11 @@ export default function ChatInputComponent({
         time: new Date(),
       });
       setClientMessage('');
-      setShowEmojiPicker(false);
     }
   };
 
   return (
     <div className="relative px-4 py-2">
-      {showEmojiPicker && (
-        <div className="hidden xl:block absolute right-0 bottom-full">
-          <EmojiPicker onEmojiClick={onEmojiClickHandler} />
-        </div>
-      )}
       <TextFieldRoot>
         <TextFieldInput
           placeholder={'Type your message'}
@@ -57,10 +45,7 @@ export default function ChatInputComponent({
         />
         <TextFieldSlot>
           <GamePopoverComponent socket={socket} />
-          <MdEmojiEmotions
-            className="hidden xl:block text-xl md:text-2xl text-zinc-400 cursor-pointer"
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          />
+          <EmojiPopoverComponent setClientMessage={setClientMessage} />
           <IoIosSend
             className="text-xl md:text-2xl text-zinc-400 cursor-pointer"
             onClick={onSendMessageHandler}
