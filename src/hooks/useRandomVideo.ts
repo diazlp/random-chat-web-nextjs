@@ -16,11 +16,13 @@ const useRandomVideo = ({
   peer,
   partner,
 }: UseRandomVideoProps): {
+  cameraRef: MutableRefObject<any>;
   videoRef: RefObject<HTMLVideoElement>;
   responsiveVideoRef: RefObject<HTMLVideoElement>;
   partnerVideoRef: RefObject<HTMLVideoElement>;
   myStream: MutableRefObject<any>;
 } => {
+  const cameraRef = useRef<any>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const responsiveVideoRef = useRef<HTMLVideoElement>(null);
   const partnerVideoRef = useRef<HTMLVideoElement>(null);
@@ -46,8 +48,32 @@ const useRandomVideo = ({
           videoElement.current.srcObject = stream;
           myStream.current = stream;
         }
-      } catch (error) {
-        // Empty block statement
+        if (cameraRef.current) {
+          cameraRef.current = '';
+        }
+      } catch (error: any) {
+        if (error.name === 'NotAllowedError') {
+          // The user denied permission
+          console.error('User denied webcam access');
+          cameraRef.current = 'DISABLED';
+        } else if (
+          error.name === 'NotFoundError' ||
+          error.name === 'DevicesNotFoundError'
+        ) {
+          // No webcam found or the browser doesn't support getUserMedia
+          console.error(
+            'Webcam not found or browser does not support getUserMedia'
+          );
+        } else if (
+          error.name === 'NotReadableError' ||
+          error.name === 'TrackStartError'
+        ) {
+          // Webcam or audio device is already in use
+          console.error('Webcam or audio device is already in use');
+        } else {
+          // Other errors
+          console.error('Error accessing webcam:', error.message);
+        }
       }
     };
 
@@ -131,6 +157,7 @@ const useRandomVideo = ({
   }, [socket]);
 
   return {
+    cameraRef,
     videoRef,
     responsiveVideoRef,
     partnerVideoRef,

@@ -19,6 +19,7 @@ export default function HomePage(): React.ReactNode {
   const { peer, id: peerId, remote } = useSelector(getPeerState);
   const { id: clientId, socket, guest } = useSelector(getSocket);
   const {
+    cameraRef,
     videoRef,
     responsiveVideoRef,
     partnerVideoRef,
@@ -36,6 +37,7 @@ export default function HomePage(): React.ReactNode {
       <RandomVideoSection
         socket={socket}
         peerId={peerId}
+        cameraRef={cameraRef}
         videoRef={videoRef}
         responsiveVideoRef={responsiveVideoRef}
         partnerVideoRef={partnerVideoRef}

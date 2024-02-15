@@ -6,10 +6,12 @@ import { Box, Button } from '@radix-ui/themes';
 import { Socket } from 'socket.io-client';
 import { AiOutlineAudio, AiOutlineAudioMuted } from 'react-icons/ai';
 import { FaVideo, FaVideoSlash } from 'react-icons/fa';
+import { MdOutlinePersonOff } from 'react-icons/md';
 
 interface RandomVideoSectionProps {
   socket: Socket;
   peerId: string | undefined;
+  cameraRef: MutableRefObject<any>;
   videoRef: RefObject<HTMLVideoElement>;
   responsiveVideoRef: RefObject<HTMLVideoElement>;
   partnerVideoRef: RefObject<HTMLVideoElement>;
@@ -21,6 +23,7 @@ interface RandomVideoSectionProps {
 export default function RandomVideoSection({
   socket,
   peerId,
+  cameraRef,
   videoRef,
   responsiveVideoRef,
   partnerVideoRef,
@@ -127,6 +130,12 @@ export default function RandomVideoSection({
           className="w-full h-full relative object-cover"
           muted={true}
         />
+
+        {cameraRef?.current && (
+          <div className="hidden xl:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-0">
+            <MdOutlinePersonOff size={150} />
+          </div>
+        )}
 
         {mediaStream?.current && (
           <div className="hidden xl:block absolute left-1/2 bottom-2 transform -translate-x-1/2">
